@@ -69,4 +69,3 @@ if select == "1":
         pool.join()
         print("===============================")
         count_result = len(open("reversed.txt").readlines())
-        print(((("[ + ] Total Result : "+str(count_result))(count_result))))
