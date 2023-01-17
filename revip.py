@@ -42,14 +42,24 @@ if select == "1":
 
         def revip(target):
             try:
-                getdom = requests.get("https://sonar.omnisint.io/reverse/" + target)
-                if "null" in getdom.text:
-                    print ("[?] "+cut(target, 15)+" {}=> ".format(Fore.WHITE) +"{}Maybe Domains Down".format(Fore.RED))
-                else:
-                    result = json.loads(getdom.text)
-                    print ("[+] {} => {} Domains".format(cut(str(target) ,15), len(result)))
-                    for domain in result:
-                        open('Resultz.txt', 'a').write('http://' + domain + "\n")
+                for site in line:
+			if site.startswith("http://"):
+				site = site.replace("http://", "")
+			if site.startswith("https://"):
+				site = site.replace("https://", "")
+			response = s.get("https://rapiddns.io/sameip/" + site + "?full=1#result", headers=ua).content.decode("utf-8")
+			pattern = r"</th>\n<td>(.*?)</td>"
+			results = re.findall(pattern, response)
+			print("nov@session:~$ " + site + " - [ " + str(len(results)) + " ]")
+
+			for line in results:
+				line = line.strip()  #delete ' '
+				if line.startswith("www."):
+					line = "" + line[4:]
+				if line not in names:
+					names.append(line)
+					with open('reversed.txt', 'a+') as f:
+						f.write(line + "\n") #write output
             except:
                 pass
         print ("{}Reverse IP".format(Fore.RED))
