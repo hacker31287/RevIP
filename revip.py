@@ -44,7 +44,7 @@ if select == "1":
 			response = s.get("https://rapiddns.io/sameip/" + target + "?full=1#result", headers=ua).content.decode("utf-8")
 			pattern = r"</th>\n<td>(.*?)</td>"
 			results = re.findall(pattern, response)
-			print("nov@session:~$ " + site + " - [ " + str(len(results)) + " ]")
+			print("nov@session:~$ " + target + " - [ " + str(len(results)) + " ]")
 
 			for line in results:
 				line = line.strip()  #delete ' '
